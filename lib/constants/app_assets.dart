@@ -11,4 +11,7 @@ class AppAssets {
   // static const imgSplashBackground = "assets/base/images/get_started.png";
   static const logo = "assets/images/splash.png";
   static const testImage = "assets/images/login_asking.png";
+  static const sun = "assets/images/sun.jpg";
+  static const cat = "assets/images/cat1.glb";
+  static const wolf = "assets/images/wolf.glb";
 }

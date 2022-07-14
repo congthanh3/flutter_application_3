@@ -17,6 +17,7 @@ import 'provider/auth_provider.dart';
 import 'provider/chat_provider.dart';
 import 'provider/home_provider.dart';
 import 'provider/movie_provider.dart';
+import 'provider/photo_provider.dart';
 import 'routes/my_routes.dart';
 import 'screens/splash_screen.dart';
 
@@ -47,9 +48,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     // FirebaseMessagingHelper
-    FirebaseMessagingHelper.instance.onMessage.listen(
-      LocalPushNotificationHelper.instance.notify,
-    );
+    FirebaseMessagingHelper.instance.onMessage.listen((value) => {
+          LocalPushNotificationHelper.instance.notify(value),
+          print("[FirebaseMessagingHelper] :deviceToken $value ")
+        });
     FirebaseMessagingHelper.instance.onMessageOpenedApp.listen((event) {
       LocalPushNotificationHelper.instance
           .handleSelectNotificationMap(event.data);
@@ -61,15 +63,15 @@ class _MyAppState extends State<MyApp> {
       }
     });
     // LocalPushNotificationHelper
-    LocalPushNotificationHelper.instance.selectNotificationSubject.listen(
-      LocalPushNotificationHelper.instance.handleSelectNotificationPayload,
-    );
-    LocalPushNotificationHelper.instance.details.then((value) {
-      if (value != null) {
-        LocalPushNotificationHelper.instance
-            .handleSelectNotificationPayload(value.payload);
-      }
-    });
+    // LocalPushNotificationHelper.instance.selectNotificationSubject.listen(
+    //   LocalPushNotificationHelper.instance.handleSelectNotificationPayload,
+    // );
+    // LocalPushNotificationHelper.instance.details.then((value) {
+    //   if (value != null) {
+    //     LocalPushNotificationHelper.instance
+    //         .handleSelectNotificationPayload(value.payload);
+    //   }
+    // });
   }
 
   @override
@@ -78,7 +80,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => MainProvider()),
         ChangeNotifierProvider(create: (_) => MovieStore()),
-
+        ChangeNotifierProvider(create: (_) => PhotoProvider()),
         ChangeNotifierProvider<AuthProvider>(
           create: (_) => AuthProvider(
             firebaseFirestore: firebaseFirestore,
@@ -86,13 +88,13 @@ class _MyAppState extends State<MyApp> {
             firebaseAuth: FirebaseAuth.instance,
           ),
         ),
-        // Provider<ProfileProvider>(
-        //   create: (_) => ProfileProvider(
-        //     prefs: prefs,
-        //     firebaseFirestore: firebaseFirestore,
-        //     firebaseStorage: firebaseStorage,
-        //   ),
-        // ),
+        Provider<ProfileProvider>(
+          create: (_) => ProfileProvider(
+            prefs: widget.prefs,
+            firebaseFirestore: firebaseFirestore,
+            firebaseStorage: firebaseStorage,
+          ),
+        ),
         Provider<HomeProvider>(
           create: (_) => HomeProvider(
             firebaseFirestore: firebaseFirestore,

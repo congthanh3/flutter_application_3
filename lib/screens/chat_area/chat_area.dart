@@ -7,7 +7,7 @@ import '../../models/chat_user.dart';
 import '../../provider/auth_provider.dart';
 import '../../provider/home_provider.dart';
 import '../../utilities/keyboard_utils.dart';
-import '../chat_screen.dart';
+import 'chat_screen.dart';
 import '../login_screen.dart';
 
 class ChatArea extends StatefulWidget {

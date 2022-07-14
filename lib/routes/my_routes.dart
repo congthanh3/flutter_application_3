@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // import '../screens/chat_screen.dart';
 import '../screens/home_screen.dart';
-import '../screens/setting_language.dart';
+import '../screens/setting_area/setting_language.dart';
 import '../screens/splash_screen.dart';
 
 class MyRouter {
